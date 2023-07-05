@@ -20,6 +20,8 @@ class CounterView extends StatelessWidget {
 
   void increment() {}
 
+  void decrement() {}
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,8 +29,25 @@ class CounterView extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Counter'),
         ),
-        body: ElevatedButton(
-            onPressed: increment, child: const Text("Incrementar")),
+        body: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+                onPressed: increment,
+                style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 20)),
+                child: const Text("Incrementar")),
+            const SizedBox(
+              width: 12,
+            ),
+            ElevatedButton(
+                onPressed: decrement,
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueGrey,
+                    padding: const EdgeInsets.symmetric(horizontal: 20)),
+                child: const Text("Decrementar")),
+          ],
+        ),
       ),
     );
   }
