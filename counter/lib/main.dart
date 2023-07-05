@@ -26,29 +26,39 @@ class CounterView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Counter'),
-        ),
-        body: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-                onPressed: increment,
-                style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 20)),
-                child: const Text("Incrementar")),
-            const SizedBox(
-              width: 12,
-            ),
-            ElevatedButton(
-                onPressed: decrement,
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueGrey,
-                    padding: const EdgeInsets.symmetric(horizontal: 20)),
-                child: const Text("Decrementar")),
-          ],
-        ),
-      ),
+          appBar: AppBar(
+            title: const Text('Counter'),
+          ),
+          body: Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(26),
+                child: Text(
+                  '0',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 42),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                      onPressed: increment,
+                      style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 20)),
+                      child: const Text("Incrementar")),
+                  const SizedBox(
+                    width: 12,
+                  ),
+                  ElevatedButton(
+                      onPressed: decrement,
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blueGrey,
+                          padding: const EdgeInsets.symmetric(horizontal: 20)),
+                      child: const Text("Decrementar")),
+                ],
+              ),
+            ],
+          )),
     );
   }
 }
