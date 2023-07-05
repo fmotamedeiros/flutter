@@ -11,16 +11,33 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: CounterView());
+    return const MaterialApp(home: Counter());
   }
 }
 
-class CounterView extends StatelessWidget {
-  const CounterView({super.key});
+class Counter extends StatefulWidget {
+  const Counter({super.key});
 
-  void increment() {}
+  @override
+  State<StatefulWidget> createState() {
+    return CounterView();
+  }
+}
 
-  void decrement() {}
+class CounterView extends State<Counter> {
+  var counter = 0;
+
+  void increment() {
+    setState(() {
+      counter++;
+    });
+  }
+
+  void decrement() {
+    setState(() {
+      counter--;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +48,12 @@ class CounterView extends StatelessWidget {
           ),
           body: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.all(26),
+              Padding(
+                padding: const EdgeInsets.all(26),
                 child: Text(
-                  '0',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 42),
+                  counter.toString(),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 42),
                 ),
               ),
               Row(
