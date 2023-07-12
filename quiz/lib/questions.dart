@@ -20,5 +20,16 @@ var questions = [
       {"e": "São Marino e Índia"},
     ],
     "correctAnswer": "a"
+  },
+  {
+    "question": "Qual presidente era conhecido como Jango?",
+    "answers": [
+      {"a": "Jânio Quadros"},
+      {"b": "Jacinto Anjos"},
+      {"c": "Getúlio Vargas"},
+      {"d": "João Figueiredo"},
+      {"e": "João Goulart"},
+    ],
+    "correctAnswer": "e"
   }
 ];

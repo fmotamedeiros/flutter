@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/answer.dart';
+import 'package:quiz/failure.dart';
 import 'package:quiz/question.dart';
 import 'package:quiz/questions.dart';
+import 'package:quiz/success.dart';
+import 'dart:developer';
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
@@ -14,9 +17,22 @@ class Quiz extends StatefulWidget {
 
 class QuizState extends State<Quiz> {
   var currentQuestion = 0;
+  var correctQuestions = 0;
 
-  void answer() {
+  void answer(String value) {
     setState(() {
+      if (currentQuestion < questions.length) {
+        var correctAnswer =
+            questions.elementAt(currentQuestion)["correctAnswer"] as String;
+
+        log("correctAnswer: $correctAnswer");
+        log("value: $value");
+
+        if (correctAnswer == value) {
+          correctQuestions++;
+        }
+      }
+
       currentQuestion++;
     });
   }
@@ -40,14 +56,25 @@ class QuizState extends State<Quiz> {
             title: const Text('Quiz'),
           ),
           body: Column(
-            children: [
-              QuestionText(text: getQuestionTitle()),
-              AnswerButton(action: answer, text: getAnswerOption(0)),
-              AnswerButton(action: answer, text: getAnswerOption(1)),
-              AnswerButton(action: answer, text: getAnswerOption(2)),
-              AnswerButton(action: answer, text: getAnswerOption(3)),
-              AnswerButton(action: answer, text: getAnswerOption(4)),
-            ],
+            children: currentQuestion < questions.length
+                ? [
+                    QuestionText(text: getQuestionTitle()),
+                    AnswerButton(
+                        action: answer, text: getAnswerOption(0), value: 'a'),
+                    AnswerButton(
+                        action: answer, text: getAnswerOption(1), value: 'b'),
+                    AnswerButton(
+                        action: answer, text: getAnswerOption(2), value: 'c'),
+                    AnswerButton(
+                        action: answer, text: getAnswerOption(3), value: 'd'),
+                    AnswerButton(
+                        action: answer, text: getAnswerOption(4), value: 'e'),
+                  ]
+                : [
+                    correctQuestions >= 2
+                        ? SuccessResult(correctQuestions: correctQuestions)
+                        : FailureResult(correctQuestions: correctQuestions)
+                  ],
           )),
     );
   }
