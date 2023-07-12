@@ -3,8 +3,8 @@ import 'package:quiz/answer.dart';
 import 'package:quiz/failure.dart';
 import 'package:quiz/question.dart';
 import 'package:quiz/questions.dart';
+import 'package:quiz/reset.dart';
 import 'package:quiz/success.dart';
-import 'dart:developer';
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
@@ -25,15 +25,19 @@ class QuizState extends State<Quiz> {
         var correctAnswer =
             questions.elementAt(currentQuestion)["correctAnswer"] as String;
 
-        log("correctAnswer: $correctAnswer");
-        log("value: $value");
-
         if (correctAnswer == value) {
           correctQuestions++;
         }
       }
 
       currentQuestion++;
+    });
+  }
+
+  void resetQuiz() {
+    setState(() {
+      currentQuestion = 0;
+      correctQuestions = 0;
     });
   }
 
@@ -73,7 +77,8 @@ class QuizState extends State<Quiz> {
                 : [
                     correctQuestions >= 2
                         ? SuccessResult(correctQuestions: correctQuestions)
-                        : FailureResult(correctQuestions: correctQuestions)
+                        : FailureResult(correctQuestions: correctQuestions),
+                    ResetButton(action: resetQuiz)
                   ],
           )),
     );
