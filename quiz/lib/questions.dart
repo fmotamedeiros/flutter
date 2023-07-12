@@ -1,6 +1,6 @@
 var questions = [
   {
-    "question": "De quem é a famosa frase: Penso, logo existo?",
+    "question": "De quem é a famosa frase: penso, logo existo?",
     "answers": [
       {"a": "Platão"},
       {"b": "Galileu Galilei"},

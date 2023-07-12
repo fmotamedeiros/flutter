@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:quiz/answer.dart';
+import 'package:quiz/question.dart';
 import 'package:quiz/questions.dart';
 
 class Quiz extends StatefulWidget {
@@ -26,6 +28,10 @@ class QuizState extends State<Quiz> {
     return answer.values.first;
   }
 
+  String getQuestionTitle() {
+    return questions.elementAt(currentQuestion)["question"].toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -35,56 +41,12 @@ class QuizState extends State<Quiz> {
           ),
           body: Column(
             children: [
-              Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(questions
-                          .elementAt(currentQuestion)["question"]
-                          .toString())
-                    ],
-                  )),
-              Padding(
-                padding: const EdgeInsets.only(left: 24, right: 24, top: 12),
-                child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 30,
-                    child: ElevatedButton(
-                        onPressed: answer, child: Text(getAnswerOption(0)))),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 24, right: 24, top: 12),
-                child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 30,
-                    child: ElevatedButton(
-                        onPressed: answer, child: Text(getAnswerOption(1)))),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 24, right: 24, top: 12),
-                child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 30,
-                    child: ElevatedButton(
-                        onPressed: answer, child: Text(getAnswerOption(2)))),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 24, right: 24, top: 12),
-                child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 30,
-                    child: ElevatedButton(
-                        onPressed: answer, child: Text(getAnswerOption(3)))),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 24, right: 24, top: 12),
-                child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 30,
-                    child: ElevatedButton(
-                        onPressed: answer, child: Text(getAnswerOption(4)))),
-              ),
+              QuestionText(text: getQuestionTitle()),
+              AnswerButton(action: answer, text: getAnswerOption(0)),
+              AnswerButton(action: answer, text: getAnswerOption(1)),
+              AnswerButton(action: answer, text: getAnswerOption(2)),
+              AnswerButton(action: answer, text: getAnswerOption(3)),
+              AnswerButton(action: answer, text: getAnswerOption(4)),
             ],
           )),
     );
