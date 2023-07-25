@@ -17,7 +17,7 @@ class MenuScreen extends StatelessWidget {
             padding: const EdgeInsets.only(left: 4, right: 4, top: 20),
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 400,
-              childAspectRatio: 5 / 0.75,
+              childAspectRatio: 5 / 0.8,
               crossAxisSpacing: 20,
               mainAxisSpacing: 20,
             ),
@@ -25,23 +25,23 @@ class MenuScreen extends StatelessWidget {
               MenuItem(
                   buttonText: 'Nova Categoria',
                   routePath: Routes.category,
-                  color: Colors.deepPurple),
+                  color: Colors.blue),
               MenuItem(
                   buttonText: 'Listar Categorias',
                   routePath: Routes.categories,
-                  color: Colors.deepPurple),
+                  color: Colors.blue),
               MenuItem(
                   buttonText: 'Novo Filme',
                   routePath: Routes.movie,
-                  color: Colors.indigo),
+                  color: Colors.blue),
               MenuItem(
                   buttonText: 'Listar Filme',
                   routePath: Routes.movies,
-                  color: Colors.indigo),
+                  color: Colors.blue),
               ExitItem(
                   buttonText: 'Sair',
                   routePath: Routes.login,
-                  color: Colors.red)
+                  color: Colors.grey)
             ],
           ),
         ));

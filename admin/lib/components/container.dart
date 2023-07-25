@@ -22,7 +22,7 @@ class ScreenContainer extends StatelessWidget {
           children: [
             Container(
                 constraints: const BoxConstraints(minWidth: 300, maxWidth: 400),
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(32),
                 child: Column(
                   children: includeLogo ? [const Logo(), child] : [child],
                 ))
