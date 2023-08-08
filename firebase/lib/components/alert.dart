@@ -1,7 +1,12 @@
+import 'package:admin/services/categories.dart';
+import 'package:admin/services/movies.dart';
 import 'package:flutter/material.dart';
 
 class DialogBox extends StatelessWidget {
-  const DialogBox({super.key});
+  final String categoryId;
+  final String movieId;
+
+  const DialogBox({super.key, required this.categoryId, required this.movieId});
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +27,14 @@ class DialogBox extends StatelessWidget {
           },
         ),
         TextButton(
-          child: const Text('Editar'),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        TextButton(
           child: const Text('Apagar'),
           onPressed: () {
+            if (movieId != '') {
+              deleteMovie(movieId);
+            }
+            if (categoryId != '') {
+              deleteCategory(categoryId);
+            }
             Navigator.of(context).pop();
           },
         ),

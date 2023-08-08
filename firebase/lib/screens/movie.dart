@@ -1,6 +1,7 @@
 import 'package:admin/components/container.dart';
-import 'package:admin/components/logo.dart';
 import 'package:admin/components/dropdown.dart';
+import 'package:admin/utils/routes.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -14,16 +15,34 @@ class MovieScreen extends StatefulWidget {
 }
 
 class Movie extends State<MovieScreen> {
-  String category = '';
+  String movie = '';
+  String categoryId = '';
+
   bool isLoggedIn = false;
 
   final _formKey = GlobalKey<FormState>();
 
-  Future<void> login() async {
+  CollectionReference movies = FirebaseFirestore.instance.collection('movies');
+
+  void addMovie() {
     _formKey.currentState?.save();
-    if (kDebugMode) {
-      print(category);
-    }
+    movies.add({'title': movie, 'categoryId': categoryId}).then((value) {
+      if (kDebugMode) {
+        print("Movie Added");
+      }
+      Navigator.of(context).pushReplacementNamed(Routes.movies);
+    }).catchError((error) {
+      if (kDebugMode) {
+        print("Failed to add movie: $error");
+        ;
+      }
+    });
+  }
+
+  void setCategoryId(id) {
+    setState(() {
+      categoryId = id;
+    });
   }
 
   @override
@@ -40,12 +59,12 @@ class Movie extends State<MovieScreen> {
                       decoration: const InputDecoration(
                           labelText: 'Descrição do filme'),
                       keyboardType: TextInputType.emailAddress,
-                      onSaved: (value) => category = value!),
-                  const DropdownButtonExample(),
+                      onSaved: (value) => movie = value!),
+                  DropdownButtonExample(setCategoryId: setCategoryId),
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: ElevatedButton(
-                      onPressed: login,
+                      onPressed: addMovie,
                       child: const Text('Adicionar'),
                     ),
                   ),

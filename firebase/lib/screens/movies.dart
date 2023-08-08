@@ -1,52 +1,55 @@
 import 'package:admin/components/alert.dart';
+import 'package:admin/components/box.dart';
 import 'package:admin/components/container.dart';
+import 'package:admin/services/movies.dart';
 import 'package:flutter/material.dart';
 
-class MoviesScreen extends StatelessWidget {
-  MoviesScreen({super.key});
+class MoviesScreen extends StatefulWidget {
+  const MoviesScreen({super.key});
 
-  final List<String> entries = <String>['A', 'B', 'C'];
-  final List<Color> colors = <Color>[Colors.blue, Colors.blue, Colors.blue];
+  @override
+  State<StatefulWidget> createState() {
+    return MoviesScreenView();
+  }
+}
 
-  Future<void> _showMyDialog(context) async {
+class MoviesScreenView extends State<MoviesScreen> {
+  List movies = [];
+
+  Future<void> _showMyDialog(context, id) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
-        return const DialogBox();
+        return DialogBox(movieId: id, categoryId: '');
       },
     );
   }
 
+  void getData() async {
+    var moviesData = await getMoviesData();
+    setState(() {
+      movies = moviesData;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    getData();
     return ScreenContainer(
       includeLogo: false,
       title: 'Filmes',
-      child: Expanded(
-          child: ListView.separated(
-        padding: const EdgeInsets.all(8),
-        itemCount: entries.length,
-        itemBuilder: (BuildContext context, int index) {
-          return InkWell(
-            onTap: () {
-              _showMyDialog(context);
-            },
-            child: Container(
-              height: 50,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  gradient: LinearGradient(
-                      colors: [colors[index].withOpacity(0.5), colors[index]])),
-              child: Center(
-                  child: Text('Filme ${entries[index]}',
-                      style:
-                          const TextStyle(color: Colors.white, fontSize: 18))),
-            ),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) => const Divider(),
-      )),
+      child: Column(
+        children: movies.isNotEmpty
+            ? movies
+                .map((movie) => InkWell(
+                    onTap: () {
+                      _showMyDialog(context, movie['id']);
+                    },
+                    child: TextBox(text: '${movie['title']}')))
+                .toList()
+            : [const Text('Carregando...')],
+      ),
     );
   }
 }

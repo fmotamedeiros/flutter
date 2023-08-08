@@ -1,4 +1,6 @@
 import 'package:admin/components/container.dart';
+import 'package:admin/utils/routes.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -16,12 +18,22 @@ class Category extends State<CategoryScreen> {
   bool isLoggedIn = false;
 
   final _formKey = GlobalKey<FormState>();
+  CollectionReference categories =
+      FirebaseFirestore.instance.collection('categories');
 
-  Future<void> login() async {
+  void addCategory() {
     _formKey.currentState?.save();
-    if (kDebugMode) {
-      print(category);
-    }
+    categories.add({'title': category, 'color': '52BE80'}).then((value) {
+      if (kDebugMode) {
+        print("Category Added");
+      }
+      Navigator.of(context).pushReplacementNamed(Routes.categories);
+    }).catchError((error) {
+      if (kDebugMode) {
+        print("Failed to add category: $error");
+        ;
+      }
+    });
   }
 
   @override
@@ -35,12 +47,12 @@ class Category extends State<CategoryScreen> {
             TextFormField(
                 decoration:
                     const InputDecoration(labelText: 'Descrição da categoria'),
-                keyboardType: TextInputType.emailAddress,
+                keyboardType: TextInputType.text,
                 onSaved: (value) => category = value!),
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: ElevatedButton(
-                onPressed: login,
+                onPressed: addCategory,
                 child: const Text('Adicionar'),
               ),
             ),
