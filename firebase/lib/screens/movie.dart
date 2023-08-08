@@ -28,12 +28,12 @@ class Movie extends State<MovieScreen> {
     _formKey.currentState?.save();
     movies.add({'title': movie, 'categoryId': categoryId}).then((value) {
       if (kDebugMode) {
-        print("Movie Added");
+        print("Filme adicionado...");
       }
       Navigator.of(context).pushReplacementNamed(Routes.movies);
     }).catchError((error) {
       if (kDebugMode) {
-        print("Failed to add movie: $error");
+        print("Falha ao adicionar: $error");
         ;
       }
     });

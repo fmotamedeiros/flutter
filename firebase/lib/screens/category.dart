@@ -23,14 +23,14 @@ class Category extends State<CategoryScreen> {
 
   void addCategory() {
     _formKey.currentState?.save();
-    categories.add({'title': category, 'color': '52BE80'}).then((value) {
+    categories.add({'title': category}).then((value) {
       if (kDebugMode) {
-        print("Category Added");
+        print("Categoria adicionada...");
       }
       Navigator.of(context).pushReplacementNamed(Routes.categories);
     }).catchError((error) {
       if (kDebugMode) {
-        print("Failed to add category: $error");
+        print("Falha ao adicionar: $error");
         ;
       }
     });
